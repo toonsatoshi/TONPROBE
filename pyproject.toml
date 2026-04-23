@@ -1,0 +1,12 @@
+[project]
+name = "tonprobe"
+version = "0.1.0"
+description = "TONPROBE vulnerability research pipeline"
+requires-python = ">=3.11"
+dependencies = [
+  "typer>=0.12",
+  "sqlalchemy>=2.0",
+]
+
+[project.scripts]
+tonprobe = "tonprobe.cli:app"

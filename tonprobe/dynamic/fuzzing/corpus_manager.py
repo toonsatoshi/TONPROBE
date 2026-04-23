@@ -1,0 +1,2 @@
+"""Corpus Manager module."""
+

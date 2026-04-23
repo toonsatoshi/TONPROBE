@@ -1,0 +1,2 @@
+"""Diff Analyzer module."""
+

@@ -1,23 +1,37 @@
 # TONPROBE
 
-TONPROBE is a multi-phase vulnerability research pipeline for the TON bug bounty scope.
+TONPROBE is a modular vulnerability-research pipeline for TON bug-bounty scope targets.
 
-This repository currently contains the **detailed design specification** and an implementation-oriented blueprint that breaks the design into concrete modules.
+## Status
 
-## Document map
+This repository now includes a full project scaffold for:
 
-- `docs/design-spec.md` — full system design specification.
-- `docs/implementation-plan.md` — phased build plan with deliverables and milestones.
-- `docs/database-schema.sql` — initial SQLite schema draft for ingestion, analysis, and findings workflows.
+- configuration and rule definitions (`config/`)
+- ingestion, static analysis, semantic analysis, dynamic analysis, and finding workflows (`tonprobe/`)
+- test placeholders (`tests/`)
+- helper scripts (`scripts/`)
 
-## Goals
+## Quickstart
 
-- Reduce manual toil in vulnerability research.
-- Keep a human-in-the-loop for triage and exploitability judgment.
-- Correlate static and dynamic findings through a shared local database.
+1. Copy `.env.example` to `.env` and set environment paths.
+2. Install dependencies from `pyproject.toml`.
+3. Run CLI:
 
-## Non-goals
+```bash
+tonprobe run
+```
 
-- Fully autonomous vulnerability reporting without analyst validation.
-- Replacing TON domain expertise with generic scanners.
+## CLI commands
 
+- `tonprobe run`
+- `tonprobe ingest`
+- `tonprobe analyze`
+- `tonprobe fuzz`
+- `tonprobe review`
+- `tonprobe export`
+
+## Design docs
+
+- `docs/design-spec.md`
+- `docs/implementation-plan.md`
+- `docs/database-schema.sql`
