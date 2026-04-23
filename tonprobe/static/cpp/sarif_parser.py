@@ -1,0 +1,2 @@
+"""Sarif Parser module."""
+

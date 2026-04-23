@@ -1,0 +1,7 @@
+poll_interval_seconds = 300
+auto_promote_min_severity = "high"
+output_dir = "./artifacts"
+enable_ingestion = true
+enable_static = true
+enable_semantic = true
+enable_dynamic = true

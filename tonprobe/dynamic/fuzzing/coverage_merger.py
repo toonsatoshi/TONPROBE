@@ -1,0 +1,2 @@
+"""Coverage Merger module."""
+

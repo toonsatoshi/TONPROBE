@@ -1,0 +1,6 @@
+[[repos]]
+name = "ton"
+url = "https://github.com/ton-blockchain/ton"
+path = "./repos/ton"
+language = "cpp"
+sensitivity = "critical"

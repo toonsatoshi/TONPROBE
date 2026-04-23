@@ -1,0 +1,2 @@
+"""Message Flow Graph module."""
+

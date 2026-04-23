@@ -1,0 +1,6 @@
+[bounce_handler]
+enabled = true
+severity = "high"
+
+[gas_model]
+max_steps = 10000
