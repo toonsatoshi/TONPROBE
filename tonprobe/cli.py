@@ -1,13 +1,26 @@
 """CLI entrypoint for TONPROBE."""
 
 import json
-from typing import Annotated
+from dataclasses import asdict
+from pathlib import Path
+from typing import Annotated, Literal
 
 import typer
 
 from tonprobe.findings.manager import FindingsManager
 
 app = typer.Typer(help="TONPROBE pipeline CLI")
+
+OutputFormat = Literal["json", "jsonl"]
+
+
+def _serialize_findings(findings: list, fmt: OutputFormat, *, pretty: bool) -> str:
+    records = [asdict(finding) for finding in findings]
+    if fmt == "jsonl":
+        return "\n".join(json.dumps(record) for record in records)
+    if pretty:
+        return json.dumps(records, indent=2)
+    return json.dumps(records)
 
 
 @app.command()
@@ -16,11 +29,33 @@ def run(
         list[str] | None,
         typer.Argument(help="Source files to analyze"),
     ] = None,
+    fmt: Annotated[
+        OutputFormat,
+        typer.Option("--format", "-f", help="Output format."),
+    ] = "json",
+    output: Annotated[
+        Path | None,
+        typer.Option(
+            "--output",
+            "-o",
+            help="Write output to a file path instead of stdout.",
+        ),
+    ] = None,
+    pretty: Annotated[
+        bool,
+        typer.Option("--pretty/--compact", help="Use indented JSON output."),
+    ] = True,
 ) -> None:
     """Run the full pipeline."""
     resolved_targets = targets or ["contracts/wallet.fc", "api/ton.py"]
     findings = FindingsManager().run(resolved_targets)
-    typer.echo(json.dumps([finding.__dict__ for finding in findings], indent=2))
+    rendered = _serialize_findings(findings, fmt, pretty=pretty)
+    if output is not None:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(rendered + "\n", encoding="utf-8")
+        typer.echo(f"Wrote findings to {output}")
+        return
+    typer.echo(rendered)
 
 
 @app.command()
