@@ -1,6 +1,7 @@
 """CLI entrypoint for TONPROBE."""
 
 import json
+from typing import Annotated
 
 import typer
 
@@ -10,7 +11,12 @@ app = typer.Typer(help="TONPROBE pipeline CLI")
 
 
 @app.command()
-def run(targets: list[str] = typer.Argument(None, help="Source files to analyze")) -> None:
+def run(
+    targets: Annotated[
+        list[str] | None,
+        typer.Argument(help="Source files to analyze"),
+    ] = None,
+) -> None:
     """Run the full pipeline."""
     resolved_targets = targets or ["contracts/wallet.fc", "api/ton.py"]
     findings = FindingsManager().run(resolved_targets)
